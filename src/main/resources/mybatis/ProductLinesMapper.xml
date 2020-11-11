@@ -1,0 +1,32 @@
+<!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.prutest.mappers.ProductLinesMapper">
+
+    <resultMap id="baseResultMap" type="com.example.prutest.entities.ProductLine">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="description" property="description" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="getAllProductLines" resultMap="baseResultMap">
+        select * from productLines
+    </select>
+
+    <select id="getProductLineByDescription" resultMap="baseResultMap">
+        select * from productLines where description = #{description}
+    </select>
+
+    <insert id="addProductLine">
+        insert into productLines (description)
+        values (#{description})
+    </insert>
+
+    <update id="updateProductLine">
+         update productLines
+         set description = #{description}
+         where id = #{id}
+    </update>
+
+    <delete id="deleteProductLine">
+         delete from productLines where id = #{id}
+    </delete>
+
+</mapper>

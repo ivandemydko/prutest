@@ -1,0 +1,11 @@
+spring:
+    datasource:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://localhost:3306/pruDB?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Europe/Helsinki
+        username: root
+        password: root
+mybatis:
+#     config-location: classpath:mybatis-config.xml
+#    mapper-locations: ProductLinesMapper.xml
+#     type-aliases-package: com.example.prutest.entities
+     mapper-locations: classpath*:/mybatis/*Mapper.xml
