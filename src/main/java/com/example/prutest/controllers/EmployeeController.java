@@ -25,8 +25,18 @@ public class EmployeeController {
         return employeeService.getTopFiveNamesOfEmployeesAndProfit();
     }
 
+    @GetMapping("/topFiveBestSellers")
+    public List<Employee> getTopFiveEmployees() {
+        return employeeService.getTopFiveEmployees();
+    }
+
     @PostMapping("/add")
     public void addEmployee(@Valid @RequestBody Employee employee) {
         employeeService.addEmployee(employee);
+    }
+
+    @GetMapping("/all")
+    public List<Employee>getAllEmployees() {
+        return employeeService.getAllEmployees();
     }
 }

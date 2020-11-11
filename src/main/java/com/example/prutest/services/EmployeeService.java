@@ -22,7 +22,15 @@ public class EmployeeService {
         return list;
     }
 
+    public List<Employee> getTopFiveEmployees() {
+        return employeesMapper.getTopFiveEmployees();
+    }
+
     public void addEmployee(Employee employee) {
         employeesMapper.addEmployee(employee);
+    }
+
+    public List<Employee> getAllEmployees() {
+        return employeesMapper.getAllEmployees();
     }
 }

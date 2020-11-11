@@ -11,7 +11,11 @@ import java.util.List;
 @Component
 public interface EmployeesMapper {
 
-   List<HashMap<String, Object>> getTopFiveNamesOfEmployeesAndProfit();
+    List<HashMap<String, Object>> getTopFiveNamesOfEmployeesAndProfit();
 
-   void addEmployee(Employee employee);
+    List<Employee> getTopFiveEmployees();
+
+    void addEmployee(Employee employee);
+
+    List<Employee> getAllEmployees();
 }
