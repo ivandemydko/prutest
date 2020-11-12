@@ -20,6 +20,7 @@ public class ProductService {
 //    private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(LogExample.class);
 
     private ProductLinesMapper productLinesMapper;
+    private ValidationService validationService;
 
     public List<ProductLine> getAllProductLines() {
 
@@ -36,6 +37,7 @@ public class ProductService {
     }
 
     public void addProductLine(String description) {
+        validationService.productLineDescriptionValidation(description);
         ProductLine newProductLine = new ProductLine();
         newProductLine.setDescription(description);
         productLinesMapper.addProductLine(newProductLine);

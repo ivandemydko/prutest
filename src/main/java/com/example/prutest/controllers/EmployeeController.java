@@ -25,9 +25,9 @@ public class EmployeeController {
         return employeeService.getTopFiveNamesOfEmployeesAndProfit();
     }
 
-    @GetMapping("/topFiveBestSellers")
-    public List<Employee> getTopFiveEmployees() {
-        return employeeService.getTopFiveEmployees();
+    @GetMapping("/top/{limit}")
+    public List<Employee> getTopFiveEmployees(@PathVariable int limit) {
+        return employeeService.getTopEmployees(limit);
     }
 
     @PostMapping("/add")
@@ -36,7 +36,12 @@ public class EmployeeController {
     }
 
     @GetMapping("/all")
-    public List<Employee>getAllEmployees() {
+    public List<Employee> getAllEmployees() {
         return employeeService.getAllEmployees();
+    }
+
+    @GetMapping("/findBy/officeCode/{officeCode}/and/jobTitle/{jobTitle}")
+    public List<Employee> findEmployeesByOfficeCodeAndJobTitle(@PathVariable("officeCode") String officeCode, @PathVariable String jobTitle) {
+        return employeeService.findEmployeesByOfficeCodeAndJobTitle(officeCode, jobTitle);
     }
 }
