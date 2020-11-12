@@ -1,6 +1,7 @@
 package com.example.prutest.controllers;
 
 import com.example.prutest.entities.ProductLine;
+import com.example.prutest.exceptions.LengthValidationException;
 import com.example.prutest.mappers.ProductLinesMapper;
 import com.example.prutest.services.ProductService;
 import io.swagger.annotations.ApiOperation;
@@ -29,7 +30,7 @@ public class ProductController {
     }
 
     @PostMapping("productLine/add")
-    public void addProductLine(@RequestParam(name = "description") String description) {
+    public void addProductLine(@Valid @RequestParam(name = "description") String description) {
         productService.addProductLine(description);
     }
 
@@ -56,10 +57,15 @@ public class ProductController {
         return "This product line already exists";
     }
 
-//    @ExceptionHandler
-//    @ResponseStatus(value = HttpStatus.NOT_FOUND)
+//    @ExceptionHandler(LengthValidationException.class)
+//    public String lengthHandleException() {
+//        return "length error";
+//    }
+
+//    @ExceptionHandler(RuntimeException.class)
+//    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
 //    public String responseHandleException() {
-//        return "Page not found";
+//        return "Bad request!!!";
 //    }
 
 //    @ExceptionHandler

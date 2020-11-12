@@ -5,7 +5,6 @@ import com.example.prutest.mappers.EmployeesMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
@@ -22,9 +21,9 @@ public class EmployeeService {
         log.info(String.valueOf(list));
         return list;
     }
-    
-    public List<Employee> getTopFiveEmployees() {
-        return employeesMapper.getTopFiveEmployees();
+
+    public List<Employee> getTopEmployees(int limit) {
+        return employeesMapper.getTopEmployees(limit);
     }
 
     public void addEmployee(Employee employee) {
@@ -33,5 +32,9 @@ public class EmployeeService {
 
     public List<Employee> getAllEmployees() {
         return employeesMapper.getAllEmployees();
+    }
+
+    public List<Employee> findEmployeesByOfficeCodeAndJobTitle(String officeCode, String jobTitle) {
+        return employeesMapper.findEmployeesByOfficeCodeAndJobTitle(Integer.parseInt(officeCode), jobTitle);
     }
 }

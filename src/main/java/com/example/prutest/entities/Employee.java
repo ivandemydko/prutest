@@ -28,7 +28,6 @@ public class Employee {
     private int officeCode;
     @ApiModelProperty(value = "Id of manager this employee reports to")
     private Integer reportsTo;
-    @NotNull
     @Pattern(regexp = "manager|sales representative", message = "incorrect job title")
     private String jobTitle;
 }

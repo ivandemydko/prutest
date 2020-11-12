@@ -5,40 +5,35 @@
     <select id="getTopFiveNamesOfEmployeesAndProfit" resultType="java.util.HashMap">
         select em.firstName, em.lastName, sum(amount) as total
         from employees em
-        join customers cus on em.id = cus.salesRepEmployee
-        join payments pay on pay.customerId = cus.id
-        group by em.lastName
+                 join customers cus on em.id = cus.salesRepEmployee
+                 join payments pay on pay.customerId = cus.id
+        group by em.id
         order by total desc
         limit 5;
     </select>
 
-<!--    <select id="getTopFiveEmployees" resultType="com.example.prutest.entities.Employee">-->
-<!--        select * from employees-->
-<!--        where id in (select em.id-->
-<!--                     from employees as em-->
-<!--                     join customers as cus on em.id = cus.salesRepEmployee-->
-<!--                     join payments as pay on pay.customerId = cus.id-->
-<!--                     group by em.firstName, em.lastName-->
-<!--                     having sum(amount) > 0-->
-<!--                     order by sum(amount) desc)-->
-<!--        limit 2;-->
-<!--    </select>-->
+    <select id="getTopEmployees" resultType="com.example.prutest.entities.Employee">
+        select *
+        from employees as em
+                 join customers as cus on em.id = cus.salesRepEmployee
+                 join payments as pay on pay.customerId = cus.id
+        group by em.id
+        having sum(amount) > 0
+        order by sum(amount) desc
+        limit #{limit};
+    </select>
 
-
-    <select id="getTopFiveEmployees" resultType="com.example.prutest.entities.Employee">
-        select * from employees
-        where id in (select * from(select em.id
-                     from employees as em
-                     join customers as cus on em.id = cus.salesRepEmployee
-                     join payments as pay on pay.customerId = cus.id
-                     group by em.firstName, em.lastName
-                     having sum(amount) > 0
-                     order by sum(amount) desc
-            limit 5)as t)
+    <select id="findEmployeesByOfficeCodeAndJobTitle" resultType="com.example.prutest.entities.Employee">
+        SELECT * FROM employees
+        WHERE officeCode = #{officeCode}
+        <if test="jobTitle != null">
+            AND jobTitle = #{jobTitle}
+        </if>
     </select>
 
     <select id="getAllEmployees" resultType="com.example.prutest.entities.Employee">
-        select * from employees;
+        select *
+        from employees;
     </select>
 
     <insert id="addEmployee">
