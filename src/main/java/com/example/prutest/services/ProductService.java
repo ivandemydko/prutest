@@ -3,10 +3,7 @@ package com.example.prutest.services;
 import com.example.prutest.entities.ProductLine;
 import com.example.prutest.mappers.ProductLinesMapper;
 import lombok.AllArgsConstructor;
-import lombok.extern.log4j.Log4j;
-import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Marker;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -37,7 +34,7 @@ public class ProductService {
     }
 
     public void addProductLine(String description) {
-        validationService.productLineDescriptionValidation(description);
+        validationService.isProductLineDescriptionLengthCorrect(description);
         ProductLine newProductLine = new ProductLine();
         newProductLine.setDescription(description);
         productLinesMapper.addProductLine(newProductLine);

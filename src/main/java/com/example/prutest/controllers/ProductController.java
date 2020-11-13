@@ -47,7 +47,7 @@ public class ProductController {
 
     @PostMapping("productLine/addWithBody")
     @ApiOperation(value = "Adds product line",
-                  notes = "requires object of 'ProductLine' for request body.")
+            notes = "requires object of 'ProductLine' for request body.")
     public void addProductLineWithBody(@Valid @RequestBody ProductLine productLine) {
         productService.addProductLine(productLine);
     }
@@ -55,6 +55,11 @@ public class ProductController {
     @ExceptionHandler(DuplicateKeyException.class)
     public String handleException() {
         return "This product line already exists";
+    }
+
+    @ExceptionHandler(NullPointerException.class)
+    public String nullPointerExceptionHandler(Exception e) {
+        return "Can not find item";
     }
 
 //    @ExceptionHandler(LengthValidationException.class)

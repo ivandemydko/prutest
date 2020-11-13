@@ -1,20 +1,24 @@
 package com.example.prutest.controllers;
 
+import com.example.prutest.entities.Employee;
+import com.example.prutest.entities.ProductLine;
+import com.google.gson.Gson;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.hamcrest.Matchers.containsString;
-
 
 
 @SpringBootTest
@@ -24,14 +28,23 @@ import static org.hamcrest.Matchers.containsString;
 //@Sql(value = "/create-employee-after.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 class EmployeeControllerTest {
 
-    private final String bestEmployee = "{\"id\":3,\"firstName\":\"Saveliy\",\"lastName\":\"Siniy\",\"" +
-            "email\":\"siniysaveliy@gmail.com\",\"phone\":\"+3 050 333-33-33\",\"officeCode\":3,\"reportsTo\":1," +
-            "\"jobTitle\":\"sales representative\"}";
-
-
     @Autowired
     private MockMvc mockMvc;
 
+    Gson gson = new Gson();
+    private final Employee bestEmployee;
+
+    {
+        bestEmployee = new Employee();
+        bestEmployee.setId((long) 3);
+        bestEmployee.setFirstName("Saveliy");
+        bestEmployee.setLastName("Siniy");
+        bestEmployee.setEmail("siniysaveliy@gmail.com");
+        bestEmployee.setPhone("+3 050 333-33-33");
+        bestEmployee.setOfficeCode(3);
+        bestEmployee.setReportsTo(1);
+        bestEmployee.setJobTitle("sales representative");
+    }
 
     @Test
     void getTopFiveNamesOfEmployeesAndProfit() throws Exception {
@@ -48,13 +61,29 @@ class EmployeeControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json"))
-                .andExpect(content().string(containsString(bestEmployee)));
+                .andExpect(content().string(containsString(gson.toJson(bestEmployee))));
     }
 
     @Test
-    void addEmployee() {
-    }
+    void addEmployee() throws Exception {
+        Employee employee = new Employee();
+        employee.setFirstName("TestName");
+        employee.setLastName("TestLastName");
+        employee.setReportsTo(1);
+        employee.setJobTitle("sales representative");
+        employee.setOfficeCode(1);
+        employee.setPhone("+38 050 1234567");
+        employee.setEmail("test@gmail.com");
 
+        String json = gson.toJson(employee);
+        this.mockMvc.perform(
+                post("/employee/add")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andReturn();
+    }
 
     @Test
     void getAllEmployeesTest() throws Exception {
@@ -62,7 +91,7 @@ class EmployeeControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json"))
-                .andExpect(content().string(containsString(bestEmployee)));
+                .andExpect(content().string(containsString(gson.toJson(bestEmployee))));
     }
 
     @Test
@@ -71,6 +100,6 @@ class EmployeeControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json"))
-                .andExpect(content().string(containsString(bestEmployee)));
+                .andExpect(content().string(containsString(gson.toJson(bestEmployee))));
     }
 }
