@@ -1,0 +1,30 @@
+<!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.prutest.mappers.CustomerMapper">
+
+    <resultMap id="baseResultMap" type="com.example.prutest.entities.Customer">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="firstName" property="firstName" jdbcType="VARCHAR"/>
+        <result column="lastName" property="lastName" jdbcType="VARCHAR"/>
+        <result column="email" property="email" jdbcType="VARCHAR"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR"/>
+        <result column="address" property="address" jdbcType="VARCHAR"/>
+        <result column="city" property="city" jdbcType="VARCHAR"/>
+        <result column="country" property="country" jdbcType="VARCHAR"/>
+        <result column="postCode" property="postCode" jdbcType="VARCHAR"/>
+        <result column="salesRepEmployee" property="salesRepEmployee" jdbcType="INTEGER"/>
+
+        <collection property="orders" ofType="com.example.prutest.entities.Orders">
+            <id column="ordernumber" property="ordernumber" jdbcType="INTEGER"/>
+            <result column="date" property="date" jdbcType="DATE"/>
+            <result column="shippedDate" property="shippedDate" jdbcType="DATE"/>
+            <result column="status" property="status" jdbcType="VARCHAR"/>
+            <result column="comments" property="comments" jdbcType="VARCHAR"/>
+            <result column="customerId" property="customerId" jdbcType="INTEGER"/>
+        </collection>
+    </resultMap>
+
+    <select id="getAllCustomers" resultMap="baseResultMap">
+        select * from customers c inner join orders o on c.id = o.customerId;
+    </select>
+
+</mapper>
